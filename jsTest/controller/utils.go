@@ -20,7 +20,7 @@ func PopulateTemplates() map[string]*template.Template {
 		panic("Failed to read contents of content directory: " + err.Error())
 	}
 	for _, fi := range fis {
-
+		println(fi.Name())
 		tmpl, err := template.ParseFiles(basePath + "/content/" + fi.Name())
 		if err != nil {
 			panic("Failed to parse contents of '" + fi.Name() + "' as template")
