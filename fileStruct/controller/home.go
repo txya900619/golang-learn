@@ -10,7 +10,7 @@ type home struct{}
 
 func (h home) registerRoutes() {
 	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("range", rangeHandler)
+	http.HandleFunc("/range/", rangeHandler)
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	vop := vm.IndexViewModelOp{}
