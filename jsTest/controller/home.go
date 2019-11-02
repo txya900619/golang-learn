@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 
-	"github.com/txya900619/golangLearning/jsTest/vm"
+	"../vm"
 )
 
 type home struct{}
