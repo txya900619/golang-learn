@@ -1,0 +1,34 @@
+<html>
+
+<head>
+  {{if .Title}}
+  <title>{{.Title}} - blog</title>
+  {{else}}
+  <title>Welcome to blog!</title>
+  {{end}}
+  <script src="./jquery-3.4.1.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#bhome").click(function(){
+        html=$.get("/home/",function(data){
+          $("myDiv").html(data);
+        });
+      });
+      $("#brage").click(function(){
+        html=$.get("/range/",function(data){
+          $("myDiv").html(data);
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+    <button id="bhome" type="button">home</button>
+    <button id="brange" type="button">range</button>
+    <div id="myDiv"></div>
+  
+  {{template "content" .}}
+</body>
+
+</html>
