@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/txya900619/golangLearning/fileStruct/controller"
+	"./controller"
 )
 
 func main() {

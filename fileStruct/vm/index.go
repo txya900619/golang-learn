@@ -1,7 +1,7 @@
 package vm
 
 import (
-	"github.com/txya900619/golangLearning/fileStruct/model"
+	"../model"
 )
 
 type IndexViewModel struct {
