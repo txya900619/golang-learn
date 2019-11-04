@@ -12,6 +12,7 @@ func (h home) registerRoutes() {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/range/", rangeHandler)
 	http.HandleFunc("/home/", homeHandler)
+	http.HandleFunc("/login/", loginHandler)
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	vop := vm.IndexViewModelOp{}
