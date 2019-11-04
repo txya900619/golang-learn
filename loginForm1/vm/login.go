@@ -5,7 +5,7 @@ type LoginViewModel struct {
 }
 type LoginViewModelOp struct{}
 
-func (LoginViewModelOp) GetMV() LoginViewModel {
+func (LoginViewModelOp) GetVM() LoginViewModel {
 	v := LoginViewModel{}
 	v.SetTitle("Login")
 	return v
