@@ -6,21 +6,8 @@
   {{else}}
   <title>Welcome to blog!</title>
   {{end}}
-  <script src="./jquery-3.4.1.min.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $("#bhome").click(function(){
-        html=$.get("/home/",function(data){
-          $("myDiv").html(data);
-        });
-      });
-      $("#brage").click(function(){
-        html=$.get("/range/",function(data){
-          $("myDiv").html(data);
-        });
-      });
-    });
-  </script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
 </head>
 
 <body>
@@ -30,3 +17,17 @@
 </body>
 
 </html>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#bhome").click(function(){
+      $.get("/home",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+    $("#brange").click(function(){
+      resive=$.get("/range",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+  });
+</script>
