@@ -1,0 +1,45 @@
+<html>
+
+<head>
+  {{if .Title}}
+  <title>{{.Title}} - blog</title>
+  {{else}}
+  <title>Welcome to blog!</title>
+  {{end}}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  
+</head>
+
+<body>
+    <button id="bhome" type="button">home</button>
+    <button id="brange" type="button">range</button>
+    <button id="blogin" type="button">login</button>
+    <button id="btodo" type="button">todolist</button>
+    <div id="myDiv"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#bhome").click(function(){
+      $.get("/home",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+    $("#brange").click(function(){
+      $.get("/range",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+    $("#blogin").click(function(){
+      $.get("/login",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+    $("#btodo").click(function(){
+      $.get("/todoList",function(data){
+        $("#myDiv").html(data);
+      });
+    });
+  });
+</script>

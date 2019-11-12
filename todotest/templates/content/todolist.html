@@ -1,0 +1,20 @@
+<h1>Todolist</h1>
+    <input type="text" id="todothing" value="" placeholder="Describe what you todo">
+    <input type="datetime-local" id="deadline">
+    <button type="button" id="submit">Submit</button>
+    
+<script>
+$(document).ready(function(){
+  $("#submit").click(function(){
+    var paraJSON='{\"todothing\":\"'+$("#todothing").val()+'\",\"deadline\":\"'+$("#deadline").val()+'\"}'
+    $.ajax({
+            type: "POST",
+            url: "/todoList",
+            contentType: "application/json",
+            data:paraJSON,
+            dataType: "json",
+        });ssss
+
+  });
+});
+</script>
