@@ -2,9 +2,11 @@
     <input type="text" id="todothing" value="" placeholder="Describe what you todo">
     <input type="datetime-local" id="deadline">
     <button type="button" id="submit">Submit</button>
-    
+    <div id="apitesttry"></div>
 <script>
 $(document).ready(function(){
+  
+  });
   $("#submit").click(function(){
     var paraJSON='{\"todothing\":\"'+$("#todothing").val()+'\",\"deadline\":\"'+$("#deadline").val()+':00+08:00\"}'
     $.ajax({
@@ -14,7 +16,33 @@ $(document).ready(function(){
             data:paraJSON,
             dataType: "json",
         });
+        setTimeout(GETlists,500)
+    var GETlists=$.ajax({
+      type:"GET",
+      url : "/todoList/lists",
+      dataType:"json",
+      success: function(data){
+        console.log(data);
+        var htm ="";
+        htm += "<table><thead><tr><th>complete</th><th>todothing</th><th>deadline</th></tr></thead><tbody>";
+        for(var i=0;i<data.length;i++){
+          console.log(i);
+          var time=data[i].deadline.replace("T"," ");
+          time=time.replace("Z","");
+          htm += '<tr id='+data[i].id+'><td>' + data[i].status + '</td><td>'
+                    + data[i].todothing + '</td><td>'
+                    + time + '</td>';
+        }
+        htm += '</tbody></table>';
+        $("#apitesttry").html(htm);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        alert(XMLHttpRequest.status);
+        alert(XMLHttpRequest.readyState);
+        alert(textStatus);
+      },
+    });
 
-  });
+
 });
 </script>

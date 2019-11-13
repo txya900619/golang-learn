@@ -41,6 +41,31 @@
       $.get("/todoList",function(data){
         $("#myDiv").html(data);
       });
+      $.ajax({
+        type:"GET",
+        url : "/todoList/lists",
+        dataType:"json",
+        success: function(data){
+          console.log(data);
+          var htm ="";
+          htm += "<table><thead><tr><th>complete</th><th>todothing</th><th>deadline</th></tr></thead><tbody>";
+          for(var i=0;i<data.length;i++){
+            console.log(i);
+            var time=data[i].deadline.replace("T"," ");
+            time=time.replace("Z","");
+            htm += '<tr id='+data[i].id+'><td>' + data[i].status + '</td><td>'
+                        + data[i].todothing + '</td><td>'
+                        + time + '</td><td>';
+          }
+          htm += '</tbody></table>';
+          $("#apitesttry").append(htm);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        },
+      });
     });
   });
 </script>

@@ -19,6 +19,7 @@ func (h home) registerRoutes() {
 	http.HandleFunc("/home", homeHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/todoList", todolistHandler)
+	http.HandleFunc("/todoList/lists", todolistGetlistsHandler)
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	vop := vm.IndexViewModelOp{}
@@ -81,10 +82,29 @@ func todolistHandler(w http.ResponseWriter, r *http.Request) {
 
 	}
 	if r.Method == http.MethodGet {
+
 		vop := vm.LoginViewModelOp{}
 		v := vop.GetVM()
 		templates["todolist.html"].Execute(w, &v)
 	}
+}
+func todolistGetlistsHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	db, err := sql.Open("mysql", "root:Fuck06050@/todolist?charset=utf8&&parseTime=true")
+	defer db.Close()
+	checkErr(err)
+	var getTodo []*model.TodolistGET
+	rows, err := db.Query("SELECT * FROM todo")
+	checkErr(err)
+	for rows.Next() {
+		var onetodo model.TodolistGET
+		err = rows.Scan(&onetodo.Todothing, &onetodo.Deadline, &onetodo.Status, &onetodo.Id)
+		checkErr(err)
+		fmt.Println(onetodo)
+		getTodo = append(getTodo, &onetodo)
+	}
+	err = json.NewEncoder(w).Encode(getTodo)
+	checkErr(err)
 }
 func check(username, password string) bool {
 	if username == "txya900619" && password == "25553706" {
