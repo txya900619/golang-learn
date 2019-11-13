@@ -6,14 +6,14 @@
 <script>
 $(document).ready(function(){
   $("#submit").click(function(){
-    var paraJSON='{\"todothing\":\"'+$("#todothing").val()+'\",\"deadline\":\"'+$("#deadline").val()+'\"}'
+    var paraJSON='{\"todothing\":\"'+$("#todothing").val()+'\",\"deadline\":\"'+$("#deadline").val()+':00+08:00\"}'
     $.ajax({
             type: "POST",
             url: "/todoList",
             contentType: "application/json",
             data:paraJSON,
             dataType: "json",
-        });ssss
+        });
 
   });
 });

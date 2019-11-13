@@ -1,12 +1,14 @@
 package controller
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"../model"
 	"../vm"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type home struct{}
@@ -62,13 +64,20 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 func todolistHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
+		db, err := sql.Open("mysql", "root:Fuck06050@/todolist?charset=utf8")
+		defer db.Close()
+		checkErr(err)
 		var newTodo model.Todolist
-		err := json.NewDecoder(r.Body).Decode(&newTodo)
+		err = json.NewDecoder(r.Body).Decode(&newTodo)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
 		}
 		fmt.Println(newTodo.Todothing, newTodo.Deadline)
+
+		stmt, err := db.Prepare("INSERT todo SET todo_describe=?, todo_deadline=?, todo_status=0")
+		checkErr(err)
+		_, err = stmt.Exec(newTodo.Todothing, newTodo.Deadline)
 
 	}
 	if r.Method == http.MethodGet {
@@ -82,4 +91,9 @@ func check(username, password string) bool {
 		return true
 	}
 	return false
+}
+func checkErr(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
