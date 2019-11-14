@@ -53,9 +53,15 @@
             console.log(i);
             var time=data[i].deadline.replace("T"," ");
             time=time.replace("Z","");
-            htm += '<tr id='+data[i].id+'><td>' + data[i].status + '</td><td>'
-                        + data[i].todothing + '</td><td>'
-                        + time + '</td><td>';
+            if (data[i].status==0){
+              htm += '<tr><td><input type="checkbox" val='+data[i].id+'/></td><td>'
+                      + data[i].todothing + '</td><td>'
+                      + time + '</td><td>';
+              }else{
+                htm += '<tr><td><input type="checkbox" val='+data[i].id+' checked></td><td>'
+                      + data[i].todothing + '</td><td>'
+                      + time + '</td><td>';
+              }
           }
           htm += '</tbody></table>';
           $("#apitesttry").append(htm);

@@ -29,9 +29,15 @@ $(document).ready(function(){
           console.log(i);
           var time=data[i].deadline.replace("T"," ");
           time=time.replace("Z","");
-          htm += '<tr id='+data[i].id+'><td>' + data[i].status + '</td><td>'
-                    + data[i].todothing + '</td><td>'
-                    + time + '</td>';
+          if (data[i].status==0){
+              htm += '<tr><td><input type="checkbox" val='+data[i].id+'></td><td>'
+                      + data[i].todothing + '</td><td>'
+                      + time + '</td><td>';
+              }else{
+                htm += '<tr><td><input type="checkbox" val='+data[i].id+' checked></td><td>'
+                      + data[i].todothing + '</td><td>'
+                      + time + '</td><td>';
+              }
         }
         htm += '</tbody></table>';
         $("#apitesttry").html(htm);
@@ -41,6 +47,21 @@ $(document).ready(function(){
         alert(XMLHttpRequest.readyState);
         alert(textStatus);
       },
+    });
+    $(checkbox).click(function () {
+        var status=0;
+        if ($(this).prop("checked")) {
+           status=1;
+        } else {
+          status=0;
+        }
+        $.ajax({
+          type:"PUT",
+          url:"/todolist/lists/"+$(this).val(),
+          contentType:"application/json",
+          dataType:"json",
+          data:'{\"status\":\"'+status+'\"}',
+        });
     });
 
 

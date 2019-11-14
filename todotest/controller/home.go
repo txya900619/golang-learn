@@ -20,6 +20,7 @@ func (h home) registerRoutes() {
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/todoList", todolistHandler)
 	http.HandleFunc("/todoList/lists", todolistGetlistsHandler)
+	http.HandleFunc("/todolist/lists/:id", todolistStatusUpdate)
 }
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	vop := vm.IndexViewModelOp{}
@@ -105,6 +106,21 @@ func todolistGetlistsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	err = json.NewEncoder(w).Encode(getTodo)
 	checkErr(err)
+}
+func todolistStatusUpdate(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPut {
+		url := r.URL
+		db, err := sql.Open("mysql", "root:Fuck06050@/todolist?charset=utf8")
+		defer db.Close()
+		checkErr(err)
+		var toUpdate model.TodolistStatus
+		err = json.NewDecoder(r.Body).Decode(&toUpdate)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		stmt, err := db.Prepare("UPDATE todo SET status=? ")
+	}
 }
 func check(username, password string) bool {
 	if username == "txya900619" && password == "25553706" {

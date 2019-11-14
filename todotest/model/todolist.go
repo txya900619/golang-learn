@@ -12,3 +12,6 @@ type TodolistGET struct {
 	Status    bool      `json:"status"`
 	Id        int       `json:"id"`
 }
+type TodolistStatus struct {
+	Status string `json:"status"`
+}
