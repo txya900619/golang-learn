@@ -1,0 +1,175 @@
+@import url(default.css);
+.base {
+  background-color: wheat;
+  position: absolute;
+  width: 95%;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 3px 3px 5px 6px rgb(42, 42, 42);
+}
+.left {
+  height: auto;
+  width: 40%;
+}
+.right {
+  display: inline;
+}
+.my_personal_img {
+  margin: 10px 10px 10px 10px;
+}
+.my_status {
+  background-color: aquamarine;
+  margin: 10px 0px 10px 0px;
+  border-radius: 10px;
+  width: auto;
+  height: 40px;
+  position: inherit;
+  box-shadow: 2px 2px 4px 4px rgb(42, 42, 42);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  min-height: 20px;
+}
+.main-title {
+  background-color:black;
+  color: azure;
+  margin: 10px 10px;
+  border-radius: 10px;
+  width: auto;
+  position: inherit;
+  box-shadow: 2px 2px 4px 4px rgb(42, 42, 42);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-align: center;
+  font-size: 2.8em;
+  white-space: nowrap;
+  padding: 10px;
+}
+.To-Do-List-input {
+  text-align: center;
+}
+.to_do_list_title {
+  background-color: white;
+  width: auto;
+  border-radius: 0.25rem;
+  position: inherit;
+  box-shadow: 2px 2px 4px 4px rgb(42, 42, 42);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 1.8em;
+}
+#my_photo {
+  box-shadow: 2px 2px 4px 4px rgb(42, 42, 42);
+  width: 100%;
+  height: auto;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+.flex_a {
+  flex: 1;
+}
+.flex_b {
+  flex: 2;
+}
+.my_icon {
+  width: auto;
+  height: 100%;
+}
+@media (max-width: 1250px) {
+  .my_status {
+    font-size: 0.8em;
+    height: 30px;
+  }
+  .main-title {
+    font-size: 2em;
+  }
+}
+@media (max-width: 900px) {
+  .my_status {
+    font-size: 0.5em;
+    height: 20px;
+  }
+  .main-title {
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 600px) {
+  .base {
+    width: auto;
+    height: auto;
+  }
+  .left,
+  .right {
+    width: 100%;
+  }
+  .my_status {
+    margin: 5px default;
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+    font-size: 0.6em;
+    height: 10px;
+  }
+  .main-title {
+    margin: 5px default;
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+    font-size: 2em;
+  }
+  .to_do_list_title {
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+  }
+  .flex {
+    flex-direction: column;
+  }
+}
+@media (max-width: 500px) {
+  .base {
+    width: auto;
+    height: auto;
+  }
+  .left,
+  .right {
+    width: 100%;
+  }
+  .main-title {
+    margin: 2px default;
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+    font-size: 1.5em;
+  }
+  .to_do_list_title {
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+  }
+  .flex {
+    flex-direction: column;
+  }
+}
+@media (max-width: 350px) {
+  .base {
+    width: auto;
+    height: auto;
+  }
+  .left,
+  .right {
+    width: 100%;
+  }
+  .main-title {
+    margin: 2px default;
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+    font-size: 1em;
+  }
+  .to_do_list_title {
+    box-shadow: 1px 1px 2px 2px rgb(42, 42, 42);
+  }
+  .flex {
+    flex-direction: column;
+  }
+}

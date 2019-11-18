@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -11,28 +10,32 @@ import (
 )
 
 type (
-	todoSQLmodel struct {
-		Describe string    `json:"todothing" gorm:"column:todo_describe"`
-		Deadline time.Time `json:"deadline" gorm:"column:todo_deadline"`
-		Status   bool      `json:"status" gorm:"column:todo_status"`
-		ID       uint      `json:"id" gorm:"column:todo_id"`
+	TodoSQLmodel struct {
+		Describe string `json:"user_input" gorm:"column:todo_describe"`
+		Status   bool   `json:"status" gorm:"column:todo_status"`
+		ID       uint   `json:"item_id" gorm:"primary_key;column:todo_id"`
 	}
 	Status struct {
-		Status int `json:"status"`
+		Status bool `json:"status"`
 	}
 )
 
 func main() {
 	router := gin.Default()
+	router.Delims("[[", "]]")
 	router.LoadHTMLGlob("./templates/*.html")
+	router.Static("/css", "./templates/css")
+	router.Static("/js", "./templates/js")
 	router.GET("/todolist", gettingtodolist)
 	router.GET("/todolist/lists", getlists)
 	router.POST("/todolist", newtodo)
-	router.PUT("/todolist/lists/:id", changeStatus)
+	router.PUT("/todolist/:id", changeStatus)
+	router.DELETE("/todolist/:id", deletetodo)
 	router.Run(":8888")
+
 }
 func gettingtodolist(c *gin.Context) {
-	c.HTML(200, "todolist.html", nil)
+	c.HTML(200, "index.html", nil)
 }
 func getlists(c *gin.Context) {
 	db, err := gorm.Open("mysql", "root:Fuck06050@/todolist?charset=utf8&parseTime=True&loc=Local")
@@ -40,7 +43,7 @@ func getlists(c *gin.Context) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	var todos []todoSQLmodel
+	var todos []TodoSQLmodel
 	db.Table("todo").Find(&todos)
 	c.JSON(http.StatusOK, todos)
 }
@@ -50,9 +53,15 @@ func newtodo(c *gin.Context) {
 	if err != nil {
 		panic("failed to connect database")
 	}
-	var newtodo todoSQLmodel
+	var newtodo TodoSQLmodel
 	c.BindJSON(&newtodo)
-	db.Create(&newtodo)
+	if newtodo.Describe == "" {
+		c.JSON(403, nil)
+	} else {
+		db.Create(&newtodo)
+		fmt.Println(newtodo)
+		c.JSON(http.StatusOK, newtodo)
+	}
 }
 func changeStatus(c *gin.Context) {
 	id := c.Param("id")
@@ -65,7 +74,17 @@ func changeStatus(c *gin.Context) {
 	c.BindJSON(&status)
 	fmt.Println(status.Status)
 	db.Table("todo").Where("todo_id=?", id).Update("todo_status", status.Status)
+	c.JSON(http.StatusOK, nil)
 }
-func (todo *todoSQLmodel) TableName() string {
+func deletetodo(c *gin.Context) {
+
+	db, err := gorm.Open("mysql", "root:Fuck06050@/todolist?charset=utf8&parseTime=True&loc=Local")
+	defer db.Close()
+	if err != nil {
+		panic("failed to connect database")
+	}
+	db.Table("todo").Where("todo_id=?", c.Param("id")).Delete(TodoSQLmodel{})
+}
+func (todo *TodoSQLmodel) TableName() string {
 	return "todo"
 }
